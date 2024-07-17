@@ -1,0 +1,60 @@
+<html>
+    <head>
+        <title> program 8</title>
+        <script src="ang.js"></script>
+        <style>
+            .error-message{
+                color:red;
+            }
+        </style>
+    </head>
+    <body ng-app="myapp">
+        <div ng-controller="login">
+            <h1> Login Form</h1>
+            <form name="loginform">
+                Enter the user name: <input type="text" name="username4" ng-model="username" ng-minlength="5" ng-maxlength="8" required/>
+                <span class="error-message" ng-show="loginform.username4.$error.required && loginform.username4.$dirty"> User name is required</span>
+
+                <span class="error-message" ng-show="loginform.username4.$error.minlength"> User Name Can Have Minimum 5 Characters</span>
+                <span class="error-message" ng-show="loginform.username4.$error.maxlength"> User Name Can Have Minimum 5 Characters</span>
+                <br><br>
+                Enter the password:<input type="password" name="password" ng-model="password" ng-minlength="5" ng-maxlength="10" required/>
+                <span class="error-message" ng-show="loginform.password.$error.minlength"> Password  can have minimum 5 characters</span>
+                <span class="error-message" ng-show="loginform.password.$error.maxlength"> Password  can have maximum 8 characters</span>
+                <br>
+
+                <input type="button" value="login" ng-disabled="loginform.$invalid" ng-click="login()" id="loginbutton"/>
+
+            </form>
+        </div>
+    </body>
+</html>
+
+<script>
+    var app = angular.module("myapp", []);
+    app.controller('login', function($scope) {
+
+        $scope.username=""
+        $scope.password=""
+        $scope.numAttempts= 0
+
+        $scope.login=function(){
+            if($scope.username.toLowerCase()=="mithun"&& $scope.password=="mithun31"){
+                alert("Login Successfull");
+            }
+
+            else{
+                $scope.numAttempts++;
+                if($scope.numAttempts <=3){
+                    alert("Incorrect login credentials!! Attempt number"+$scope.numAttempts);
+
+                }
+                else{
+                    document.getElementById("loginbutton").disabled=true
+                }
+            }
+        }
+
+    });
+
+</script>

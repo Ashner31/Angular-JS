@@ -1,0 +1,81 @@
+<html>
+<head>
+    <title>Shopping list</title>
+    <script src="ang.js"></script>
+</head>
+<body ng-app = "myapp">
+    <h1>Shopping Cart</h1>
+
+    <div ng-controller = "shopping">   
+
+        Enter Name of Item: 
+        <input type="text" ng-model="p1" id="box1">
+        <input type="button" value="ADD" ng-click="addItems()"> 
+        
+        <br><br>
+
+        Slelct a item to remove:
+        <select ng-model="p2" ng-options="item for item in shoppinglist" id="box2"></select>
+        <input type="button" value="REMOVE" ng-click = "removeItems()">
+        
+        <h2>Item's List</h2>
+        <ul>
+            <li ng-repeat="item in shoppinglist"> {{item}} </li>
+        </ul>
+
+    </div>
+</body>
+</html>
+
+<script>
+    var v = angular.module("myapp",[]);
+
+    v.controller("shopping", function($scope)
+    {
+        $scope.shoppinglist = ["Rice", "Sugar", "Milk"];
+
+        $scope.addItems = function()
+        {
+
+            if($scope.p1 && $scope.shoppinglist.indexOf($scope.p1)==-1)
+            {
+                $scope.shoppinglist.push($scope.p1);
+                $scope.p1 = "";
+            }
+
+            else
+            {
+                if($scope.p1)
+                {
+                    alert($scope.p1 + " alredy exists in the list");
+                    document.getElementById("box1").focus();
+                    return false;
+                }
+                else
+                {
+                    alert("Enter item name to add in the list");
+                    document.getElementById("box1").focus();
+                    return false;
+                }
+            }
+        }
+
+        $scope.removeItems = function()
+        {   
+            if($scope.shoppinglist.indexOf($scope.p2)==-1)
+            {
+                alert("Select an item from the list")
+                document.getElementById("box2").focus();
+                return false;
+            }   
+            else
+            {
+                var name = $scope.shoppinglist.indexOf($scope.p2);
+                $scope.shoppinglist.splice(name, 1);
+                $scope.p2="";
+            }
+        }
+    });
+
+
+</script>
